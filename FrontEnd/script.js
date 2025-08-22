@@ -5,8 +5,7 @@ async function fetchPosts() {
   const posts = await res.json(); 
   const postsDiv = document.getElementById('posts'); 
   postsDiv.innerHTML = posts.map(p => 
-    `<div 
-class="post"><h3>${p.title}</h3><p>${p.content}</p></div>` 
+    `<div class="post"><h3>${p.title}</h3><p>${p.content}</p></div>` 
   ).join(''); 
 } 
  

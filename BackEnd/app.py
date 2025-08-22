@@ -1,10 +1,11 @@
+
 from flask import Flask, request, jsonify 
 from flask_cors import CORS 
 import psycopg2 
 import os
 
 
-aapp = Flask(__name__) 
+app = Flask(__name__) 
 CORS(app) 
  
 DB_HOST = os.environ['DB_HOST'] 
@@ -24,17 +25,14 @@ conn.commit()
  
 @app.route('/posts', methods=['GET']) 
 def get_posts(): 
-    cur.execute("SELECT title, content FROM posts ORDER BY id 
-DESC") 
+    cur.execute("SELECT title, content FROM posts ORDER BY id DESC") 
     posts = cur.fetchall() 
-    return jsonify([{"title": t, "content": c} for t, c in 
-posts]) 
+    return jsonify([{"title": t, "content": c} for t, c in posts]) 
  
 @app.route('/posts', methods=['POST']) 
 def create_post(): 
     data = request.get_json() 
-    cur.execute("INSERT INTO posts (title, content) VALUES (%s, 
-%s)", 
+    cur.execute("INSERT INTO posts (title, content) VALUES (%s, %s)", 
                 (data['title'], data['content'])) 
     conn.commit() 
     return jsonify({"status": "success"}), 201 
